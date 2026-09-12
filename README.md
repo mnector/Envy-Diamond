@@ -38,16 +38,16 @@ Envy-Diamond unlocks the true power of DLSS and OptiScaler features on AMD hardw
 
 ```mermaid
 graph TD
-    A[🎮 Game Engine] -->|DLSS Request| B(💎 Envy-Diamond Proxy)
-    B -->|Translates to| C{⚙️ OptiScaler Core}
-    C -->|FidelityFX / XeSS| D[🔴 AMD GPU]
-    C -->|Frame Generation| E[🌌 MFG / Frame Generation]
-    D --> F[📺 Rendered Frame]
+    A["🎮 Game Engine"] -->|"DLSS Request"| B("💎 Envy-Diamond Proxy")
+    B -->|"Translates to"| C{"⚙️ OptiScaler Core"}
+    C -->|"FidelityFX / XeSS"| D["🔴 AMD GPU"]
+    C -->|"Frame Generation"| E["🌌 MFG / Frame Generation"]
+    D --> F["📺 Rendered Frame"]
     E --> F
     
-    subgraph 🛡️ Anti-Crash Protection
-    G[💻 Dynamic Pacing Daemon] -.->|Reads Logs| C
-    G -.->|Hot-Reloads Limits| C
+    subgraph Protection ["🛡️ Anti-Crash Protection"]
+        G["💻 Dynamic Pacing Daemon"] -.->|"Reads Logs"| C
+        G -.->|"Hot-Reloads Limits"| C
     end
 ```
 
