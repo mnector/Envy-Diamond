@@ -13,9 +13,9 @@ if (-not (Test-Path $iniPath)) {
 
 $minFPS = 45
 $maxFPS = 120
-$stepDown = 5
-$stepUp = 1
-$upDelayMs = 10000
+$stepDownPercent = 0.08
+$stepUpPercent = 0.02
+$upDelayMs = 8000
 
 function Get-CurrentLimit {
     $content = Get-Content $iniPath -ErrorAction SilentlyContinue
@@ -98,7 +98,8 @@ try {
         if ($spikeDetected) {
             $lastSpikeTime = Get-Date
             $currentLimit = Get-CurrentLimit
-            $newLimit = $currentLimit - $stepDown
+            $newLimit = [math]::Floor($currentLimit * (1 - $stepDownPercent))
+            if (($currentLimit - $newLimit) -lt 1) { $newLimit = $currentLimit - 1 }
             Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Spike detected! Lowering limit to $newLimit"
             Set-CurrentLimit $newLimit
         }
@@ -107,7 +108,8 @@ try {
             if ($elapsed.TotalMilliseconds -ge $upDelayMs) {
                 $currentLimit = Get-CurrentLimit
                 if ($currentLimit -lt $maxFPS) {
-                    $newLimit = $currentLimit + $stepUp
+                    $newLimit = [math]::Ceiling($currentLimit * (1 + $stepUpPercent))
+                    if (($newLimit - $currentLimit) -lt 1) { $newLimit = $currentLimit + 1 }
                     Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Stable. Increasing limit to $newLimit"
                     Set-CurrentLimit $newLimit
                 }
