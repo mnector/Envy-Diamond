@@ -63,7 +63,7 @@ if((Test-Path -LiteralPath $standalone) -and $proxyName -ne 'version.dll') {
     Move-Item -LiteralPath $standalone -Destination (Join-Path $backup 'version.dll')
 }
 Install-File (Join-Path $PSScriptRoot 'OptiScaler.dll') $proxyName
-foreach($name in @('OptiScaler.ini','dlssnr_amd_pass1.dll','dlssnr_amd_pass2.dll','dlssnr_amd_pass3.dll','dlssnr_on_amd_weights.bin','EnvyDynamicPacing.ps1','Launch-Envy.bat')) {
+foreach($name in @('OptiScaler.ini','dlssnr_amd_pass1.dll','dlssnr_amd_pass2.dll','dlssnr_amd_pass3.dll','dlssnr_on_amd_weights.bin','EnvyDynamicPacing.ps1','Launch-Envy.bat', 'Launch-Envy-variable.bat')) {
     Install-File (Join-Path $PSScriptRoot $name) $name
 }
 $deps=Join-Path $PSScriptRoot 'OptiScaler'
